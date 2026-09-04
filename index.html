@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>ХЭТ · Алена Котельникова · рекламный контент</title>
+<link rel="icon" type="image/png" href="img/logo.png?v=2">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+--bg:#F1EEF9; --card:#FFFFFF; --ink:#28213F; --muted:#6E6890;
+--violet:#7C4DD8; --violet-2:#5B34B4; --soft:#CDC2EF; --line:rgba(40,33,63,.12);
+--disp:'Manrope',sans-serif; --body:'Golos Text',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.65;overflow-x:hidden}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:90;opacity:.04;
+background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.8'/></svg>")}
+::selection{background:var(--violet);color:#fff}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1280px;margin:0 auto;padding:0 5vw}
+h1,h2,h3{font-family:var(--disp);letter-spacing:-.015em}
+.rv{opacity:0;transform:translateY(30px);transition:opacity .9s ease,transform .9s cubic-bezier(.2,.7,.2,1)}
+.rv.in{opacity:1;transform:none}
+.paw{height:15px;width:auto;display:inline-block;vertical-align:-2px}
+.spark .paw{height:18px}
+header{position:fixed;top:0;left:0;right:0;z-index:80;background:rgba(241,238,249,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.hd{display:flex;align-items:center;gap:26px;height:76px}
+.logo{display:flex;align-items:center;gap:14px}
+.logo img{height:50px;width:auto;object-fit:contain;mix-blend-mode:multiply}
+nav{margin-left:auto;display:flex;gap:30px}
+nav a{font-family:var(--disp);font-weight:700;font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);position:relative;padding:6px 0}
+nav a::after{content:"";position:absolute;left:0;bottom:0;height:2px;width:0;background:var(--violet);border-radius:2px;transition:width .35s cubic-bezier(.2,.7,.2,1)}
+nav a:hover::after,nav a.act::after{width:100%}
+nav a.act{color:var(--violet)}
+.btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--disp);font-weight:700;font-size:.76rem;letter-spacing:.1em;text-transform:uppercase;border-radius:999px;padding:16px 28px;transition:transform .3s,box-shadow .3s,background .3s,color .3s;cursor:pointer}
+.btn .ar{transition:transform .3s}
+.btn:hover .ar{transform:translate(3px,-3px)}
+.btn-fill{background:var(--violet);color:#fff}
+.btn-fill:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(124,77,216,.35)}
+.btn-line{border:1px solid var(--soft);color:var(--ink);background:transparent}
+.btn-line:hover{border-color:var(--violet);color:var(--violet);transform:translateY(-3px)}
+.hd .btn{padding:13px 24px}
+@media(max-width:960px){nav{display:none}}
+.hero{position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:center;padding:150px 0 40px}
+.fox-wrap{position:absolute;top:64px;right:-3vw;width:min(47vw,780px);pointer-events:none;z-index:0}
+.fox-wrap img{width:100%;mix-blend-mode:multiply;opacity:.9;animation:float 9s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-16px)}}
+.hero-inner{position:relative;z-index:1}
+.hi{color:var(--violet);font-weight:600;font-size:1.05rem;margin-bottom:14px}
+h1{font-weight:800;font-size:clamp(2.7rem,7vw,5.6rem);line-height:1.04;color:var(--ink)}
+.hl{display:block;overflow:hidden;padding-bottom:.08em;margin-bottom:-.08em}
+.hl>span{display:block;transform:translateY(115%);transition:transform 1.1s cubic-bezier(.16,.8,.24,1)}
+body.loaded .hl:nth-child(1)>span{transform:none}
+body.loaded .hl:nth-child(2)>span{transform:none;transition-delay:.12s}
+.hsub{color:var(--violet);font-family:var(--disp);font-weight:700;font-size:clamp(1.05rem,2.3vw,1.5rem);margin:26px 0 18px}
+.hlead{color:var(--muted);max-width:470px;margin-bottom:38px}
+.hbtns{display:flex;gap:16px;flex-wrap:wrap}
+.hero-bottom{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-top:9vh;position:relative;z-index:1}
+.hb-left{border-left:2px solid var(--violet);padding-left:16px}
+.hb-left b{font-family:var(--disp);font-weight:800;font-size:1.05rem}
+.hb-left span{display:block;color:var(--muted);font-size:.85rem;line-height:1.45}
+.down{color:var(--violet);font-size:1.3rem;animation:bob 1.8s ease-in-out infinite}
+.down img{height:70px;width:auto;mix-blend-mode:multiply}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
+.hb-right{display:flex;align-items:center;gap:26px}
+.hb-right a{font-family:var(--disp);font-weight:700;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);transition:color .3s}
+.hb-right a:hover{color:var(--violet)}
+.spark{color:var(--violet);font-size:1.2rem;display:inline-block;animation:spin 8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media(max-width:960px){.fox-wrap{opacity:.4;width:90vw;right:-18vw;top:90px}.hero-bottom{flex-wrap:wrap}}
+.mq{border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow:hidden;padding:15px 0}
+.mq-track{display:flex;width:max-content;animation:mq 60s linear infinite}
+.mq-track span{font-family:var(--disp);font-weight:700;font-size:.85rem;letter-spacing:.18em;text-transform:uppercase;color:var(--soft);white-space:nowrap;padding-right:.7em}
+.mq-track b{color:var(--violet);font-weight:400;padding-right:.7em;display:inline-flex;align-items:center}
+.mq-track .paw{height:13px}
+@keyframes mq{to{transform:translateX(-50%)}}
+section{padding:110px 0}
+.s-label{font-family:var(--disp);font-weight:700;font-size:.74rem;letter-spacing:.2em;text-transform:uppercase;color:var(--violet);display:flex;align-items:center;gap:14px;margin-bottom:18px}
+.s-label::after{content:"";height:1px;width:60px;background:var(--soft)}
+h2{font-weight:800;font-size:clamp(1.7rem,3.8vw,2.7rem);line-height:1.12;margin-bottom:20px}
+.s-note{color:var(--muted);max-width:560px}
+.about{display:grid;grid-template-columns:430px 1fr;gap:70px;align-items:center;margin-top:50px}
+.about-photo{background:var(--card);padding:14px;border-radius:26px;box-shadow:0 24px 60px rgba(40,33,63,.14);transform:rotate(-2deg);transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+.about-photo:hover{transform:rotate(0) scale(1.02)}
+.about-photo img{border-radius:16px;aspect-ratio:4/5;object-fit:cover;width:100%}
+.about-photo figcaption{font-size:.75rem;color:var(--muted);text-align:center;padding:12px 0 4px}
+.about-txt p{color:var(--muted);margin-bottom:16px;max-width:560px}
+.about-txt p b{color:var(--ink)}
+.facts{display:flex;gap:14px;flex-wrap:wrap;margin-top:30px}
+.fact{background:var(--card);border:1px solid var(--line);border-radius:999px;padding:12px 22px;font-family:var(--disp);font-weight:700;font-size:.8rem;color:var(--ink)}
+.fact i{font-style:normal;color:var(--violet)}
+.fact .cross{height:13px;width:auto;display:inline-block;vertical-align:-1px;mix-blend-mode:multiply}
+@media(max-width:960px){.about{grid-template-columns:1fr;gap:40px}.about-photo{max-width:420px}}
+.filters{display:flex;gap:10px;flex-wrap:wrap;margin:40px 0 34px}
+.f-chip{font-family:var(--disp);font-weight:700;font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;padding:11px 22px;border-radius:999px;border:1px solid var(--soft);background:transparent;color:var(--ink);cursor:pointer;transition:.3s}
+.f-chip:hover{border-color:var(--violet);color:var(--violet)}
+.f-chip.on{background:var(--violet);border-color:var(--violet);color:#fff}
+.cat-note{color:var(--muted);max-width:640px;margin:0 0 26px;min-height:1.5em}
+.works{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+.work{background:var(--card);border-radius:24px;padding:12px 12px 20px;box-shadow:0 14px 40px rgba(40,33,63,.08);transition:transform .45s cubic-bezier(.2,.7,.2,1),box-shadow .45s;cursor:pointer}
+.work:hover{transform:translateY(-8px);box-shadow:0 30px 60px rgba(40,33,63,.16)}
+.work.hide{display:none}
+.work.pop{animation:workIn .55s cubic-bezier(.2,.7,.2,1)}
+@keyframes workIn{from{opacity:0;transform:translateY(20px) scale(.96)}}
+.wimg{border-radius:16px;overflow:hidden;aspect-ratio:4/3;position:relative;background:var(--bg)}
+.wimg img,.wimg video{width:100%;height:100%;object-fit:cover;transition:transform 1.4s cubic-bezier(.2,.7,.2,1);-webkit-user-drag:none;user-select:none;-webkit-touch-callout:none}
+.work:hover .wimg img,.work:hover .wimg video{transform:scale(1.07)}
+.wimg::after{content:"смотреть ↗";position:absolute;inset:auto 12px 12px auto;background:var(--violet);color:#fff;font-family:var(--disp);font-weight:700;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;padding:9px 16px;border-radius:999px;opacity:0;transform:translateY(8px);transition:.35s}
+.work:hover .wimg::after{opacity:1;transform:none}
+.work[data-cat="copy"] .wimg::after{content:"читать ↗"}
+.work[data-cat="proj"] .wimg::after{content:"открыть ↗"}
+.wmeta{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:16px 8px 0}
+.wmeta .tag{font-family:var(--disp);font-weight:700;font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;color:var(--violet)}
+.wmeta h3{font-weight:700;font-size:1.02rem;margin-top:4px}
+.wmeta .yr{font-size:.78rem;color:var(--muted)}
+@media(max-width:960px){.works{grid-template-columns:1fr 1fr}}
+@media(max-width:620px){.works{grid-template-columns:1fr}}
+.lightbox{position:fixed;inset:0;z-index:200;background:rgba(24,18,40,.92);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .35s}
+.lightbox.open{opacity:1;pointer-events:auto}
+.lb-stage{display:flex;flex-direction:column;align-items:center;gap:16px;max-width:min(92vw,1100px)}
+.lb-media img{max-width:min(92vw,1100px);max-height:70vh;width:auto;border-radius:18px;background:#fff;box-shadow:0 40px 90px rgba(0,0,0,.5);-webkit-user-drag:none;user-select:none;-webkit-touch-callout:none}
+.lb-media video{width:min(92vw,1100px);max-height:70vh;border-radius:18px;background:#000;box-shadow:0 40px 90px rgba(0,0,0,.5)}
+.lb-sheet{background:#fff;color:var(--ink);border-radius:18px;padding:36px 40px;max-width:720px;max-height:70vh;overflow:auto;box-shadow:0 40px 90px rgba(0,0,0,.5)}
+.lb-sheet h3{font-family:var(--disp);font-weight:800;font-size:1.3rem;margin-bottom:14px}
+.lb-sheet p{color:var(--muted);white-space:pre-line}
+.lb-cap{text-align:center;color:#fff}
+.lb-cap h3{font-family:var(--disp);font-weight:700;font-size:1.05rem}
+.lb-cap p{color:rgba(255,255,255,.75);font-size:.9rem;margin-top:4px;max-width:640px;white-space:pre-line}
+.lb-cap span{display:block;color:rgba(255,255,255,.55);font-size:.75rem;margin-top:8px;font-family:var(--disp)}
+.lb-close{position:absolute;top:20px;right:24px;width:52px;height:52px;border:none;border-radius:50%;background:#fff;color:#28213F;font-size:1.1rem;cursor:pointer;transition:transform .3s;display:flex;align-items:center;justify-content:center; z-index: 201;}
+.lb-close:hover{transform:rotate(90deg)}
+.lb-close img{width:20px;height:20px;mix-blend-mode:multiply}
+.lb-nav{position:absolute;top:50%;transform:translateY(-50%);width:52px;height:52px;border:none;border-radius:50%;background:rgba(255,255,255,.14);color:#fff;font-size:1.3rem;cursor:pointer;transition:.3s;z-index:2}
+.lb-nav:hover{background:var(--violet)}
+.lb-prev{left:18px}
+.lb-next{right:18px}
+.cta-card{background:linear-gradient(135deg,var(--violet) 0%,var(--violet-2) 100%);border-radius:34px;padding:clamp(44px,7vw,90px);color:#fff;position:relative;overflow:hidden}
+.cta-card::after{content:"";position:absolute;right:-70px;bottom:-46px;width:min(62%,580px);aspect-ratio:2/1;background:url(img/tail.png) center/contain no-repeat;mix-blend-mode:multiply;opacity:.55;pointer-events:none;transform-origin:92% 60%;animation:wag 3.4s ease-in-out infinite}
+@keyframes wag{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(4deg)}}
+.cta-card h2{color:#fff;max-width:640px}
+.cta-card p{color:rgba(255,255,255,.8);max-width:520px;margin-bottom:38px}
+.cta-btns{display:flex;gap:16px;flex-wrap:wrap}
+.btn-white{background:#fff;color:var(--violet-2)}
+.btn-white:hover{transform:translateY(-3px);box-shadow:0 16px 34px rgba(0,0,0,.25)}
+.btn-ghost{border:1px solid rgba(255,255,255,.4);color:#fff}
+.btn-ghost:hover{border-color:#fff;transform:translateY(-3px)}
+.cta-soc{display:flex;gap:26px;margin-top:44px;flex-wrap:wrap}
+.cta-soc a{font-family:var(--disp);font-weight:700;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.75);transition:color .3s}
+.cta-soc a:hover{color:#fff}
+footer{border-top:1px solid var(--line);padding:28px 0}
+footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;font-size:.8rem;color:var(--muted)}
+footer b{font-family:var(--disp);color:var(--ink)}
+footer a:hover{color:var(--violet)}
+footer .up{display:inline-flex;align-items:center;gap:8px}
+footer .up img{height:46px;width:auto;mix-blend-mode:multiply;transform:scaleY(-1);transition:transform .3s}
+footer .up:hover img{transform:scaleY(-1) translateY(-4px)}
+
+/* ───────── МОБИЛЬНАЯ ВЕРСИЯ ───────── */
+@media(max-width:620px){
+html, body { overflow-x: hidden !important; }
+.hero-inner, .s-label, h2, .s-note, .cat-note { text-align: center; }
+.s-label { justify-content: center; }
+.s-label::after { display: none; }
+.about-txt { text-align: left !important; }
+.hbtns { flex-direction: column; width: 100%; }
+.hbtns .btn { width: 100%; justify-content: center; }
+.hero-bottom { flex-direction: column-reverse; align-items: center; gap: 20px; margin-top: 40px; }
+.down { order: -1; margin-bottom: 10px; }
+.hb-left { border-left: none; border-top: 2px solid var(--violet); padding-left: 0; padding-top: 16px; text-align: center; width: 100%; }
+.hb-left b { display: inline; margin-right: 6px; }
+.hb-left span { display: inline; }
+.hb-right { justify-content: center; }
+.facts { justify-content: center; gap: 8px; }
+.fact { padding: 8px 14px; font-size: .7rem; }
+.filters { justify-content: center; }
+.works { grid-template-columns: 1fr 1fr !important; gap: 12px; }
+.work { padding: 8px 8px 12px; border-radius: 16px; }
+.wmeta { padding: 10px 4px 0; flex-direction: column; gap: 2px; }
+.wmeta h3 { font-size: .85rem; line-height: 1.2; }
+.wmeta .yr { display: none; }
+.wimg::after { display: none; }
+.lb-nav { background: transparent !important; backdrop-filter: none !important; width: 44px; height: 44px; font-size: 2rem; text-shadow: 0 2px 8px rgba(0,0,0,.5); }
+.lb-prev { left: 10px; }
+.lb-next { right: 10px; }
+.lb-stage { width: 94vw; max-height: 90vh; }
+.lb-media img, .lb-media video { max-width: 94vw; border-radius: 12px; }
+
+/* БЕЛЫЙ ЛИСТ НА ТЕЛЕФОНЕ С РАЗРЕШЁННОЙ ПРОКРУТКОЙ */
+.lb-sheet { 
+    padding: 24px 20px; 
+    max-width: 94vw; 
+    max-height: 75vh !important; 
+    overflow-y: auto !important; 
+    -webkit-overflow-scrolling: touch !important; 
+    border-radius: 12px; 
+}
+.lb-cap p { font-size: .8rem; }
+.cta-card { text-align: center; }
+.cta-btns { justify-content: center; }
+.cta-soc { justify-content: center; }
+}
+
+@media (prefers-reduced-motion: reduce){
+html{scroll-behavior:auto}
+*,*::before,*::after{animation-duration:.001s!important;animation-iteration-count:1!important;transition-duration:.001s!important}
+.mq-track{animation:none}
+.hl>span{transform:none}
+.rv{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+<header>
+<div class="wrap hd">
+<a class="logo" href="#top">
+<img src="img/logo-header.png" alt="ХЭТ · рекламный контент" onerror="this.onerror=null;this.src='img/logo.png'">
+</a>
+<nav>
+<a href="#about">Обо мне</a>
+<a href="#portfolio">Портфолио</a>
+<a href="#contacts">Контакты</a>
+</nav>
+<a class="btn btn-fill" href="#contacts">Связаться <span class="ar">↗</span></a>
+</div>
+</header>
+<div class="hero" id="top">
+<div class="fox-wrap">
+<img src="img/fox-line.png" alt="" onerror="this.onerror=null;this.src='https://picsum.photos/seed/fox-line-art/900/700'">
+</div>
+<div class="wrap hero-inner">
+<p class="hi">Здравствуйте! Я</p>
+<h1>
+<span class="hl"><span>Алена</span></span>
+<span class="hl"><span>Котельникова</span></span>
+</h1>
+<p class="hsub">Айдентика. Копирайтинг. Рекламный дизайн.</p>
+<p class="hlead">Создаю визуальные системы, которые не просто выглядят красиво, а работают на узнаваемость бренда.</p>
+<div class="hbtns">
+<a class="btn btn-fill" href="#portfolio">Смотреть портфолио <span class="ar">↗</span></a>
+<a class="btn btn-line" href="#contacts">Связаться со мной <span class="ar">↗</span></a>
+</div>
+<div class="hero-bottom">
+<div class="hb-left"><b>ХЭТ</b><span>Ваша реклама прямо в цель</span></div>
+<a class="down" href="#about" aria-label="листайте вниз"><img src="img/fox-run.png" alt="" onerror="this.outerHTML='↓'"></a>
+<div class="hb-right">
+<a href="https://vk.ru/alenahet2026" target="_blank">VK</a><a href="https://t.me/AlenaHet" target="_blank">Telegram</a><span class="spark"><img class="paw" src="img/paw.png" alt="" onerror="this.outerHTML='✦'"></span>
+</div>
+</div>
+</div>
+</div>
+<div class="mq" aria-hidden="true">
+<div class="mq-track">
+<span>рекламный контент</span><b><img class="paw" src="img/paw.png" alt="" onerror="this.outerHTML='✦'"></b><span>копирайтинг</span><b><img class="paw" src="img/paw.png" alt="" onerror="this.outerHTML='✦'"></b><span>айдентика</span><b><img class="paw" src="img/paw.png" alt="" onerror="this.outerHTML='✦'"></b><span>рекламный дизайн</span><b><img class="paw" src="img/paw.png" alt="" onerror="this.outerHTML='✦'"></b><span>логотипы</span><b><img class="paw" src="img/paw.png" alt="" onerror="this.outerHTML='✦'"></b><span>анимация</span><b><img class="paw" src="img/paw.png" alt="" onerror="this.outerHTML='✦'"></b>
+<span>контент</span><b><img class="paw" src="img/paw.png" alt="" onerror="this.outerHTML='✦'"></b><span>копирайтинг</span><b><img class="paw" src="img/paw.png" alt="" onerror="this.outerHTML='✦'"></b><span>айдентика</span><b><img class="paw" src="img/paw.png" alt="" onerror="this.outerHTML='✦'"></b><span>рекламный дизайн</span><b><img class="paw" src="img/paw.png" alt="" onerror="this.outerHTML='✦'"></b><span>логотипы</span><b><img class="paw" src="img/paw.png" alt="" onerror="this.outerHTML='✦'"></b><span>анимация</span><b><img class="paw" src="img/paw.png" alt="" onerror="this.outerHTML='✦'"></b>
+<span>контент</span><b><img class="paw" src="img/paw.png" alt="" onerror="this.outerHTML='✦'"></b><span>копирайтинг</span><b><img class="paw" src="img/paw.png" alt="" onerror="this.outerHTML='✦'"></b><span>айдентика</span><b><img class="paw" src="img/paw.png" alt="" onerror="this.outerHTML='✦'"></b><span>рекламный дизайн</span><b><img class="paw" src="img/paw.png" alt="" onerror="this.outerHTML='✦'"></b><span>логотипы</span><b><img class="paw" src="img/paw.png" alt="" onerror="this.outerHTML='✦'"></b><span>анимация</span><b><img class="paw" src="img/paw.png" alt="" onerror="this.outerHTML='✦'"></b>
+<span>контент</span><b><img class="paw" src="img/paw.png" alt="" onerror="this.outerHTML='✦'"></b><span>копирайтинг</span><b><img class="paw" src="img/paw.png" alt="" onerror="this.outerHTML='✦'"></b><span>айдентика</span><b><img class="paw" src="img/paw.png" alt="" onerror="this.outerHTML='✦'"></b><span>рекламный дизайн</span><b><img class="paw" src="img/paw.png" alt="" onerror="this.outerHTML='✦'"></b><span>логотипы</span><b><img class="paw" src="img/paw.png" alt="" onerror="this.outerHTML='✦'"></b><span>анимация</span><b><img class="paw" src="img/paw.png" alt="" onerror="this.outerHTML='✦'"></b>
+</div>
+</div>
+<section id="about">
+<div class="wrap">
+<div class="rv">
+<p class="s-label">01 · обо мне</p>
+<h2>Дизайн в вашу цель</h2>
+</div>
+<div class="about rv">
+<figure class="about-photo">
+<img src="img/about.jpg" alt="Алена Котельникова" onerror="this.onerror=null;this.src='https://picsum.photos/seed/designer-portrait-studio/640/800'">
+<figcaption>Алена · ХЭТ studio</figcaption>
+</figure>
+<div class="about-txt">
+<p>С отличием окончила обучение по специальности «Агент рекламы», где основной упор был на разработке брендов, носителей и маркетинговых стратегий с элементами менеджмента.</p>
+<p>Разрабатываю рекламный контент от фирменного стиля вашей компании до её продвижения.</p>
+<p>Составляю брифы, анализирую аудиторию и нахожу решения работающие на результат.</p>
+<div class="facts">
+<span class="fact"><i><img class="cross" src="img/cross.png" alt="" onerror="this.outerHTML='✕'"></i> красный диплом · «Агент рекламы»</span>
+<span class="fact"><i><img class="cross" src="img/cross.png" alt="" onerror="this.outerHTML='✕'"></i> призёр · «Профессионалы»</span>
+<span class="fact"><i><img class="cross" src="img/cross.png" alt="" onerror="this.outerHTML='✕'"></i> реклама · копирайтинг · веб-разработка</span>
+<span class="fact"><i><img class="cross" src="img/cross.png" alt="" onerror="this.outerHTML='✕'"></i> дизайн · менеджмент · маркетинг</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="portfolio" style="padding-top:0">
+<div class="wrap">
+<div class="rv">
+<p class="s-label">02 · портфолио</p>
+<h2>Избранные работы</h2>
+<p class="s-note"><strong>Дождитесь полной загрузки портфолио.</strong> Кликните на изображение чтобы ознакомится.</p>
+</div>
+<div class="filters rv">
+<button class="f-chip on" data-f="all">Все</button>
+<button class="f-chip" data-f="logo">Логотипы</button>
+<button class="f-chip" data-f="adv">Реклама</button>
+<button class="f-chip" data-f="copy">Копирайт</button>
+<button class="f-chip" data-f="anim">Анимация</button>
+<button class="f-chip" data-f="proj">Проекты</button>
+</div>
+<p class="cat-note" id="catNote"></p>
+<div class="works rv"></div>
+</div>
+</section>
+<section id="contacts" style="padding-top:0">
+<div class="wrap">
+<div class="cta-card rv">
+<p class="s-label" style="color:rgba(255,255,255,.7)">03 · контакты</p>
+<h2>Связаться со мной:</h2>
+<p>Выберите удобный для вас способ.</p>
+<div class="cta-btns">
+<a class="btn btn-white" href="mailto:alenahet1@gmail.com">Написать на почту <span class="ar">✉</span></a>
+</div>
+<div class="cta-soc">
+<a href="https://vk.ru/alenahet2026" target="_blank">VK</a><a href="https://t.me/AlenaHet" target="_blank">Telegram</a>
+</div>
+</div>
+</div>
+</section>
+<footer>
+<div class="wrap">
+<span><b>ХЭТ</b> · рекламный контент</span>
+<span>© 2026 · Алена Котельникова</span>
+<a href="#top" class="up"><img src="img/fox-run.png" alt="" onerror="this.outerHTML='наверх ↑'"></a>
+</div>
+</footer>
+<div class="lightbox" id="lightbox">
+<button class="lb-close" aria-label="Закрыть"><img src="img/cross.png" alt="" onerror="this.outerHTML='✕'"></button>
+<button class="lb-nav lb-prev" aria-label="назад">←</button>
+<button class="lb-nav lb-next" aria-label="вперёд">→</button>
+<div class="lb-stage">
+<div class="lb-media" id="lbMedia"></div>
+<div class="lb-cap"><h3 id="lbH"></h3><p id="lbT"></p><span id="lbCount"></span></div>
+</div>
+</div>
+<script>
+const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+setTimeout(() => document.body.classList.add('loaded'), RM ? 0 : 200);
+document.querySelectorAll('.rv').forEach(el => {
+new IntersectionObserver(es => es.forEach(e => {
+if (e.isIntersecting){ el.classList.add('in'); }
+}), {threshold:.12}).observe(el);
+});
+const links = [...document.querySelectorAll('nav a')];
+links.forEach(a => {
+const sec = document.querySelector(a.getAttribute('href'));
+if (!sec) return;
+new IntersectionObserver(es => es.forEach(e => {
+if (e.isIntersecting){ links.forEach(x => x.classList.remove('act')); a.classList.add('act'); }
+}), {rootMargin:'-40% 0px -55% 0px'}).observe(sec);
+});
+const fox = document.querySelector('.fox-wrap');
+if (fox && !RM){
+let t = false;
+addEventListener('scroll', () => {
+if (t) return; t = true;
+requestAnimationFrame(() => { fox.style.translate = `0 ${scrollY * 0.06}px`; t = false; });
+}, {passive:true});
+}
+const WORKS = {
+logo: [
+{t:'Готический магазин'},
+{t:'Студия косметических услуг'},
+{t:'Авиакомпания'},
+{t:'Ювелирный магазин'},
+{t:'Пивной магазин'},
+{t:'Трекер сна'},
+{t:'Аптека'},
+{t:'Салон красоты'},
+{t:'Компьютерный клуб'},
+{t:'Геодезическая компания'}
+],
+adv: [
+{t:'Парикмахерская'},
+{t:'Барбершоп'},
+{t:'Баннер D&D'},
+{t:'Родные корма'},
+{t:'Стикерпак. Мерч'},
+{t:'Фотозона'},
+{t:'Двусторонняя листовка'},
+{t:'Грамота'},
+{t:'Онлайн-кинотеатр'}
+],
+copy: [
+{t:'Туристическая база', head:'SMM продвижение', text:`Позвольте себе окунуться в мир активного отдыха и чистого воздуха.
+«Горная страна» богата животным миром тайги, сибирскими
+красотами и величием гор. Опытные гиды проведут вас через уникальные тропы горных гряд и массивов, обойдут с вами более ста перевалов и укажут дорогу к цветущему полю, где в безоблачную ночь над головами рассыплются звёзды, складываясь в такой редко видимый Млечный путь.
+Пешие походы позволят вам узреть несметное множество бегущих ручьёв, родников, рек, спокойных озёр и водопадов. Изучите глубины пещер, взберитесь на верхушку горы и обратно в уют дома, где лучшие виды продолжат радовать глаз.
+База оснащена бесплатным и быстрым Wi-Fi, позволяя вам поддерживать контакты даже среди лесов. В комнатах есть душевые, «Раккуун» заботится о вашем личном пространстве. Прачечная, химчистка и гладильные услуги гарантируют целостность и ухоженность вашему образу.
+У наших домов есть не менее восхитительный двор, где не зазорно провести время одному или большой компанией. Мангалы и площадка для барбекю с расположившимися неподалёку беседками.
+Зимой мы вовсе не уходим в спячку, а наоборот, готовы радовать вас новыми предложениями. Банные чаны, русские бани, новейшие снегоходы. Горы, по которым можно взбираться, зимою превращаются в горнолыжную трассу, а тёплые озёра в идеально гладкий каток.
+«Раккуун» — свобода кругом!
+#Турбаза #Туризм #ОтдыхНаПрироде #Раккуун #ТуристическаяБаза`},
+{t:'Салон красоты', head:'ATL продвижение', text:`Мы привыкли ждать подходящего момента, чтобы раскрыться. Но красоте не нужен повод.
+Иногда расцветать — значит просто выбрать себя.
+Салон красоты «Сакура» — твоя весна.`, audio:true},
+{t:'Аптека', head:'ATL продвижение, сценарий', text:`Хронометраж: 21 секунда.
+Музыкальная подложка: TimTaj — This Is for Medical. Ненавязчивая, спокойная. Звучит на протяжении всего ролика.
+SFX: девушка кашляет.
+Диктор — с заботливым любопытством и пониманием:
+«Заболели?»
+SFX: девушка вздыхает.
+Диктор — мягко, с пониманием:
+«Выдохлись? Организму срочно нужен перерыв! Самое время позаботиться о себе.
+Диктор:
+«В аптеке "Реген" вы найдёте всё необходимое для здоровья: лекарственные препараты, качественные витамины, средства для ежедневного ухода и проверенных фармацевтов».
+Диктор — финальный акцент на названии компании:
+«"Реген" — всегда в ресурсе».`, audio:true},
+{t:'Пивной магазин', head:'BTL-текст для социальных сетей', text:`Дварфы не торгуются.
+Дварфы устраивают раздачу.
+🍺Одна кружка — для тебя, 🍻вторая — за рубль! Да, ты всё правильно понял.
+Покупаешь 2 литра любого пива, второй литр идёт по цене 1 рубля.
+Только по пятницам и субботам с 18 вечера. Только в «Эльной».
+Успей, пока дварф не протрезвеет и не выпьет всё пиво.
+Пр-т Горный, д. 17.
+Мы ждём!⚔
+#Эльная #ДварфскаяАкция #ПивоЗаРубль`},
+{t:'Компьютерный клуб', head:'BTL-текст для email-рассылки', text:`Прекрати отлёживаться AFK. Восстань и лутай фарм! (▀̯̿▀̿ ̿)
+Только с 20 по 29 августа тебя ждёт легендарный куш: бесплатные сессии до 2 часов и скидка 15% на продолжение.
+Отпразднуй праздник всех геймеров как настоящий про!
+🎮Стамина — твой киберспорт🎮`},
+{t:'Геодезическая компания', head:'SMM продвижение', text:`Каждый объект начинается с одной точки.
+До первого камня, до первой сваи, до разметки на плане. Есть измерения, которые нельзя отложить, и их невозможно выполнить без особого взгляда. Того, что замечает детали, улавливает отклонения и не упускает из виду самое малое.
+«Геоптик» работает там, где цена ошибки высока. Топографические съёмки, вынос осей, исполнительные схемы, контроль вертикальных отметок, всё, чтобы ваше строительство шло по плану, а не по ощущениям.
+Если вам нужны не просто цифры, а уверенность, обратитесь к тем, кто привык видеть больше.
+*Подробнее о работах и оборудовании на нашем сайте.
+«Геоптик» — геодезические решения для тех, кто строит всерьёз.
+#Геоптик #ГеодезическиеРешения #Геодезия #Строительство #Точность`}
+],
+anim: [
+{t:'ОС анимация', y:'2026', text:'Отрисовка персонажей и озвучка выполнены самостоятельно. Анимация создана при помощи ИИ по собственному промту.'},
+{t:'ОС анимация в стиле Winx', y:'2026', text:'Отрисовка персонажа и озвучка выполнены самостоятельно. Анимация создана при помощи ИИ по собственному промту.'},
+{t:'Анимация логотипа ХЭТ', y:'2026', text:'Логотип и анимация отрисованы вручную.'}
+],
+proj: [
+{t:'Культураль', y:'2026', caps:[
+{h:'Логотип фестиваля', t:'На арт-пространстве прошёл фестиваль народного единства «Культураль», организаторами выступили «Кузбасс Первый». При разработке логотипа, шрифта и фирменного стиля я вдохновлялась изначальным проектом телеканала «Культурный пласт Кузбасса» и местной природой.'},
+{h:'Баннер группы ВК', t:'Содержит всю необходимую информацию сразу при входе в группу'},
+{h:'Посты ВК', t:`В рамках рекламной кампании было разработано множество постов, от розыгрыша путёвки до объявлений концертов.
+Пример поста розыгрыша.`},
+{h:'Посты ВК', t:'Пример поста концерта.'},
+{h:'Афиша фестиваля', t:'А3 афиша подробно информирует о предстоящем мероприятии.'},
+{h:'Инфостенды у сцены', t:'Рассказывают об организаторе и расписании фестиваля.'},
+{h:'Инфостенд выставки', t:'Описывает работу Елены Ефановой позволяя желающим посетить фотосессию.'},
+{h:'Инфостенд ярмарки', t:'Сообщает о точках продаж.'}
+], videoCap:'Видеоролик фестиваля был размещён на здании арт-пространства «Редакция»'}
+]
+};
+const TAGS = {logo:'логотип', adv:'реклама', copy:'копирайт', anim:'анимация', proj:'проект'};
+const bust = '';
+const probeImg = u => new Promise(r => { const t = setTimeout(() => r(false), 6000); const i = new Image(); i.onload = () => { clearTimeout(t); r(true); }; i.onerror = () => { clearTimeout(t); r(false); }; i.src = u + bust; });
+const probeVid = u => new Promise(r => { const t = setTimeout(() => r(false), 6000); const v = document.createElement('video'); v.preload = 'metadata'; v.onloadedmetadata = () => { clearTimeout(t); r(true); }; v.onerror = () => { clearTimeout(t); r(false); }; v.src = u + bust; });
+async function loadWorks(cat){
+const out = [], base = 'img/works/' + cat + '/';
+for (let n = 1; n < 30; n++){
+const wb = base + n + '/';
+const has = cat === 'anim' ? await probeVid(wb + 'video.mp4') : await probeImg(wb + 'cover.png');
+if (!has) continue;
+const w = {cat, n, wb, meta:(WORKS[cat] || [])[n-1] || {}};
+if (cat === 'anim'){ w.video = wb + 'video.mp4'; }
+else {
+w.cover = wb + 'cover.png';
+w.slides = [];
+for (let i = 1; i < 30; i++){
+let f = null;
+for (const ext of ['.jpg', '.png', '.jpeg']){ if (await probeImg(wb + i + ext)){ f = wb + i + ext; break; } }
+if (f) w.slides.push(f); else break;
+}
+if (cat === 'proj' && await probeVid(wb + 'video.mp4')) w.video = wb + 'video.mp4';
+}
+out.push(w);
+}
+return out;
+}
+const worksEl = document.querySelector('.works');
+let ALL = []; let curF = 'all';
+function addWork(w){
+w.i = ALL.length; ALL.push(w);
+worksEl.insertAdjacentHTML('beforeend', `
+<article class="work" data-cat="${w.cat}" data-i="${w.i}">
+<div class="wimg">${w.cat === 'anim'
+? `<video src="${w.video}" muted loop playsinline preload="metadata"></video>`
+: `<img src="${w.cover}" alt="">`}</div>
+<div class="wmeta"><div><span class="tag">${TAGS[w.cat]}</span><h3>${w.meta.t || 'Работа ' + w.n}</h3></div>${w.meta.y ? `<span class="yr">${w.meta.y}</span>` : ''}</div>
+</article>`); const el = worksEl.lastElementChild;
+if (curF !== 'all' && el.dataset.cat !== curF) el.classList.add('hide');
+}
+(async () => {
+for (const cat of ['logo','adv','copy','anim','proj']){
+const ws = await loadWorks(cat);
+ws.forEach(addWork);
+}
+})();
+worksEl.addEventListener('mouseover', e => { const v = e.target.closest('.wimg video'); if (v) v.play().catch(() => {}); });
+worksEl.addEventListener('mouseout', e => { const v = e.target.closest('.wimg video'); if (v){ v.pause(); v.currentTime = 0; } });
+const CATNOTES = {
+all:'Последние работы',
+logo:'Каждый логотип уникален и выделяется на фоне конкурентов.',
+adv:'Все носители создаются с учётом конкретной задачи, позволяя аудитории мгновенно воспринимать информацию и надолго запоминать её.',
+copy:'Авторские тексты без генераций.',
+anim:'Иллюстрации героев от руки, анимирование логотипов ручное.',
+proj:'Вы можете просмотреть реальные, реализованные проекты.'
+};
+const catNote = document.getElementById('catNote');
+catNote.textContent = CATNOTES.all;
+const chips = document.querySelectorAll('.f-chip');
+chips.forEach(c => c.onclick = () => {
+chips.forEach(x => x.classList.remove('on')); c.classList.add('on');
+const f = c.dataset.f; curF = f;
+catNote.textContent = CATNOTES[f] || '';
+document.querySelectorAll('.work').forEach(w => {
+const show = f === 'all' || w.dataset.cat === f;
+w.classList.toggle('hide', !show);
+if (show){ w.classList.remove('pop'); void w.offsetWidth; w.classList.add('pop'); }
+});
+});
+const lb = document.getElementById('lightbox');
+const lbMedia = document.getElementById('lbMedia');
+const lbH = document.getElementById('lbH');
+const lbT = document.getElementById('lbT');
+const lbCount = document.getElementById('lbCount');
+const lbPrev = document.querySelector('.lb-prev');
+const lbNext = document.querySelector('.lb-next');
+let CUR = [], CURW = null, POS = 0;
+function slidesOf(w){
+if (w.cat === 'anim') return [{type:'video', src:w.video, h:w.meta.t, t:w.meta.text}];
+if (w.cat === 'copy') return [{type:'sheet', h:w.meta.head || w.meta.t, t:w.meta.text}];
+const s = w.slides.map((src, i) => {
+const c = (w.meta.caps || [])[i] || {};
+return {type:'img', src, h:c.h || '', t:c.t || ''};
+});
+if (w.video) s.push({type:'video', src:w.video, h:w.meta.videoCap || '', t:''});
+if (!s.length) s.push({type:'img', src:w.cover, h:'', t:''});
+return s;
+}
+function showSlide(){
+const s = CUR[POS];
+if (s.type === 'img') lbMedia.innerHTML = `<img src="${s.src}" alt="">`;
+else if (s.type === 'video') lbMedia.innerHTML = `<video src="${s.src}" controls playsinline></video>`;
+else {
+    lbMedia.innerHTML = `<div class="lb-sheet"><h3>${s.h || ''}</h3><p>${s.t || 'Текст появится совсем скоро.'}</p>${CURW.meta.audio ? '<audio controls src="' + CURW.wb + 'audio.mp3" style="width:100%;margin-top:24px;outline:none;"></audio>' : ''}</div>`;
+}
+lbH.textContent = s.type === 'sheet' ? (CURW.meta.t || '') : (s.h || CURW.meta.t || '');
+lbT.textContent = s.type === 'sheet' ? '' : (s.t || '');
+lbCount.textContent = CUR.length > 1 ? (POS + 1) + ' / ' + CUR.length : '';
+const isMobileCheck = window.innerWidth <= 620;
+if (isMobileCheck && s.type === 'sheet') {
+    lbPrev.style.display = 'none';
+    lbNext.style.display = 'none';
+} else {
+    lbPrev.style.display = CUR.length > 1 ? '' : 'none';
+    lbNext.style.display = CUR.length > 1 ? '' : 'none';
+}
+}
+function openWork(w){ CURW = w; CUR = slidesOf(w); POS = 0; showSlide(); lb.classList.add('open'); }
+function lbClose(){ lb.classList.remove('open'); const v = lbMedia.querySelector('video'); if (v) v.pause(); }
+function step(d){ const v = lbMedia.querySelector('video'); if (v) v.pause(); POS = (POS + d + CUR.length) % CUR.length; showSlide(); }
+worksEl.addEventListener('click', e => {
+const card = e.target.closest('.work'); if (!card) return;
+openWork(ALL[+card.dataset.i]);
+});
+lbPrev.onclick = () => step(-1);
+lbNext.onclick = () => step(1);
+lb.addEventListener('click', e => { if (e.target === lb) lbClose(); });
+document.querySelector('.lb-close').addEventListener('click', lbClose);
+addEventListener('keydown', e => {
+if (!lb.classList.contains('open')) return;
+if (e.key === 'Escape') lbClose();
+if (e.key === 'ArrowRight') step(1);
+if (e.key === 'ArrowLeft') step(-1);
+});
+
+/* ═══════════ СВАЙПЫ ДЛЯ ТЕЛЕФОНА (БЕЗ БЛОКИРОВКИ СКРОЛЛА) ═══════════ */
+let touchStartX = 0;
+let touchEndX = 0;
+lb.addEventListener('touchstart', e => {
+    touchStartX = e.changedTouches[0].screenX;
+}, {passive: true});
+
+// Убрали e.preventDefault() — теперь палец может свободно листать текст вниз!
+lb.addEventListener('touchend', e => {
+    touchEndX = e.changedTouches[0].screenX;
+    // Если свайп был горизонтальным (больше 50px) — листаем фото
+    if (Math.abs(touchStartX - touchEndX) > 50) {
+        if (touchStartX - touchEndX > 0) step(1);
+        else step(-1);
+    }
+});
+
+addEventListener('contextmenu', e => { if (e.target.closest('.wimg, .lightbox')) e.preventDefault(); });
+</script>
+</body>
+</html>
