@@ -649,33 +649,47 @@ const bust = '';
 const probeImg = u => new Promise(r => { const t = setTimeout(() => r(false), 4000); const i = new Image(); i.onload = () => { clearTimeout(t); r(true); }; i.onerror = () => { clearTimeout(t); r(false); }; i.src = u + bust; });
 const probeVid = u => new Promise(r => { const t = setTimeout(() => r(false), 4000); const v = document.createElement('video'); v.preload = 'metadata'; v.onloadedmetadata = () => { clearTimeout(t); r(true); }; v.onerror = () => { clearTimeout(t); r(false); }; v.src = u + bust; });
 const probeAudio = u => new Promise(r => { const t = setTimeout(() => r(false), 4000); const a = new Audio(); a.onloadedmetadata = () => { clearTimeout(t); r(true); }; a.onerror = () => { clearTimeout(t); r(false); }; a.src = u + bust; });
-
-// Надёжная последовательная загрузка (как в перчитать.txt, которая грузила шикарно)
+// Функция параллельной загрузки батчами по 6 штук
+async function processBatch(tasks, batchSize = 6) {
+const results = [];
+for (let i = 0; i < tasks.length; i += batchSize) {
+const batch = tasks.slice(i, i + batchSize);
+const batchResults = await Promise.all(batch.map(task => task()));
+results.push(...batchResults);
+}
+return results;
+}
 async function loadWorks(cat){
 const out = [], base = 'img/works/' + cat + '/';
 const limit = cat === 'anim' ? (WORKS[cat] ? WORKS[cat].length : 0) : 30;
+const tasks = [];
 for (let n = 1; n <= limit; n++){
+tasks.push(async () => {
 const wb = base + n + '/';
 const has = cat === 'anim' ? await probeVid(wb + 'video.mp4') : await probeImg(wb + 'cover.png');
-if (!has) continue;
+if (!has) return null;
 const w = {cat, n, wb, meta:(WORKS[cat] || [])[n-1] || {}};
-if (cat === 'anim'){ w.video = wb + 'video.mp4'; }
-else {
+if (cat === 'anim'){
+w.video = wb + 'video.mp4';
+} else {
 w.cover = wb + 'cover.png';
 w.slides = [];
 for (let i = 1; i < 30; i++){
 let f = null;
-for (const ext of ['.jpg', '.png', '.jpeg']){ if (await probeImg(wb + i + ext)){ f = wb + i + ext; break; } }
+for (const ext of ['.jpg', '.png', '.jpeg']){
+if (await probeImg(wb + i + ext)){ f = wb + i + ext; break; }
+}
 if (f) w.slides.push(f); else break;
 }
 if (cat === 'proj' && await probeVid(wb + 'video.mp4')) w.video = wb + 'video.mp4';
 if (w.meta.audio && await probeAudio(wb + 'audio.mp3')) w.hasAudio = true;
 }
-out.push(w);
+return w;
+});
 }
-return out;
+const results = await processBatch(tasks, 6);
+return results.filter(w => w !== null);
 }
-
 const worksEl = document.querySelector('.works');
 const worksLoader = document.getElementById('worksLoader');
 const filtersEl = document.querySelector('.filters');
@@ -699,7 +713,6 @@ const ws = await loadWorks(cat);
 ws.forEach(addWork);
 }
 })();
-// Предохранитель: максимум 12 секунд, потом показываем то, что успело загрузиться
 const safety = new Promise(r => setTimeout(r, 12000));
 await Promise.race([loadPromise, safety]);
 worksLoader.style.display = 'none';
