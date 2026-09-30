@@ -645,10 +645,14 @@ proj: [
 };
 const TAGS = {logo:'логотип', adv:'реклама', copy:'копирайт', anim:'анимация', proj:'проект'};
 const bust = '';
+const IS_MOBILE = matchMedia('(max-width:620px)').matches;
+const BATCH_SIZE = IS_MOBILE ? 4 : 6;
+const SAFETY_MS = IS_MOBILE ? 120000 : 60000;
+const PROBE_MS = IS_MOBILE ? 10000 : 4000;
 // Проверенный метод проверки файлов (работает и локально, и на хостинге), таймаут 4 сек
-const probeImg = u => new Promise(r => { const t = setTimeout(() => r(false), 4000); const i = new Image(); i.onload = () => { clearTimeout(t); r(true); }; i.onerror = () => { clearTimeout(t); r(false); }; i.src = u + bust; });
-const probeVid = u => new Promise(r => { const t = setTimeout(() => r(false), 4000); const v = document.createElement('video'); v.preload = 'metadata'; v.onloadedmetadata = () => { clearTimeout(t); r(true); }; v.onerror = () => { clearTimeout(t); r(false); }; v.src = u + bust; });
-const probeAudio = u => new Promise(r => { const t = setTimeout(() => r(false), 4000); const a = new Audio(); a.onloadedmetadata = () => { clearTimeout(t); r(true); }; a.onerror = () => { clearTimeout(t); r(false); }; a.src = u + bust; });
+const probeImg = u => new Promise(r => { const t = setTimeout(() => r(false), PROBE_MS); const i = new Image(); i.onload = () => { clearTimeout(t); r(true); }; i.onerror = () => { clearTimeout(t); r(false); }; i.src = u + bust; });
+const probeVid = u => new Promise(r => { const t = setTimeout(() => r(false), PROBE_MS); const v = document.createElement('video'); v.preload = 'metadata'; v.onloadedmetadata = () => { clearTimeout(t); r(true); }; v.onerror = () => { clearTimeout(t); r(false); }; v.src = u + bust; });
+const probeAudio = u => new Promise(r => { const t = setTimeout(() => r(false), PROBE_MS); const a = new Audio(); a.onloadedmetadata = () => { clearTimeout(t); r(true); }; a.onerror = () => { clearTimeout(t); r(false); }; a.src = u + bust; });
 // Функция параллельной загрузки батчами по 6 штук
 async function processBatch(tasks, batchSize = 6) {
 const results = [];
@@ -659,8 +663,8 @@ results.push(...batchResults);
 }
 return results;
 }
-async function loadWorks(cat){
-const out = [], base = 'img/works/' + cat + '/';
+function makeTasks(cat){
+const base = 'img/works/' + cat + '/';
 const limit = cat === 'anim' ? (WORKS[cat] ? WORKS[cat].length : 0) : 30;
 const tasks = [];
 for (let n = 1; n <= limit; n++){
@@ -674,9 +678,10 @@ w.video = wb + 'video.mp4';
 } else {
 w.cover = wb + 'cover.png';
 w.slides = [];
-for (let i = 1; i < 30; i++){
+// Перебор слайдов: до 12 штук, только .jpg и .png (ускорение по итогам разборов)
+for (let i = 1; i < 12; i++){
 let f = null;
-for (const ext of ['.jpg', '.png', '.jpeg']){
+for (const ext of ['.jpg', '.png']){
 if (await probeImg(wb + i + ext)){ f = wb + i + ext; break; }
 }
 if (f) w.slides.push(f); else break;
@@ -687,8 +692,7 @@ if (w.meta.audio && await probeAudio(wb + 'audio.mp3')) w.hasAudio = true;
 return w;
 });
 }
-const results = await processBatch(tasks, 6);
-return results.filter(w => w !== null);
+return tasks;
 }
 const worksEl = document.querySelector('.works');
 const worksLoader = document.getElementById('worksLoader');
@@ -707,14 +711,18 @@ if (curF !== 'all' && el.dataset.cat !== curF) el.classList.add('hide');
 }
 (async () => {
 filtersEl.classList.add('loading');
-const loadPromise = (async () => {
-for (const cat of ['logo','adv','copy','anim','proj']){
-const ws = await loadWorks(cat);
-ws.forEach(addWork);
-}
-})();
-const safety = new Promise(r => setTimeout(r, 12000));
+// Все разделы грузятся одной общей очередью (не по разделам),
+// работы появляются разом, когда всё готово; лиса крутится всё это время
+const cats = ['logo','adv','copy','anim','proj'];
+const allTasks = [];
+for (const cat of cats) makeTasks(cat).forEach(t => allTasks.push(t));
+const results = new Array(allTasks.length).fill(undefined);
+const wrapped = allTasks.map((t, idx) => async () => { results[idx] = await t(); });
+const loadPromise = processBatch(wrapped, BATCH_SIZE);
+// Предохранитель: если канал совсем плохой, показываем то, что успело провериться
+const safety = new Promise(r => setTimeout(r, SAFETY_MS));
 await Promise.race([loadPromise, safety]);
+results.forEach(w => { if (w) addWork(w); });
 worksLoader.style.display = 'none';
 filtersEl.classList.remove('loading');
 })();
