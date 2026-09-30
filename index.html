@@ -646,9 +646,9 @@ proj: [
 const TAGS = {logo:'логотип', adv:'реклама', copy:'копирайт', anim:'анимация', proj:'проект'};
 const bust = '';
 const IS_MOBILE = matchMedia('(max-width:620px)').matches;
-const BATCH_SIZE = IS_MOBILE ? 4 : 6;
+const BATCH_SIZE = IS_MOBILE ? 6 : 10;
 const SAFETY_MS = IS_MOBILE ? 120000 : 60000;
-const PROBE_MS = IS_MOBILE ? 10000 : 4000;
+const PROBE_MS = IS_MOBILE ? 25000 : 15000;
 // Проверенный метод проверки файлов (работает и локально, и на хостинге), таймаут 4 сек
 const probeImg = u => new Promise(r => { const t = setTimeout(() => r(false), PROBE_MS); const i = new Image(); i.onload = () => { clearTimeout(t); r(true); }; i.onerror = () => { clearTimeout(t); r(false); }; i.src = u + bust; });
 const probeVid = u => new Promise(r => { const t = setTimeout(() => r(false), PROBE_MS); const v = document.createElement('video'); v.preload = 'metadata'; v.onloadedmetadata = () => { clearTimeout(t); r(true); }; v.onerror = () => { clearTimeout(t); r(false); }; v.src = u + bust; });
@@ -665,7 +665,7 @@ return results;
 }
 function makeTasks(cat){
 const base = 'img/works/' + cat + '/';
-const limit = cat === 'anim' ? (WORKS[cat] ? WORKS[cat].length : 0) : 30;
+const limit = cat === 'anim' ? (WORKS[cat] ? WORKS[cat].length + 2 : 0) : ((WORKS[cat] ? WORKS[cat].length : 0) + 4);
 const tasks = [];
 for (let n = 1; n <= limit; n++){
 tasks.push(async () => {
