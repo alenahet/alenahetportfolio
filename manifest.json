@@ -1,0 +1,41 @@
+{
+  "logo": [
+    {"n": 1, "slides": 4},
+    {"n": 2, "slides": 4},
+    {"n": 3, "slides": 4},
+    {"n": 4, "slides": 4},
+    {"n": 5, "slides": 4},
+    {"n": 6, "slides": 4},
+    {"n": 7, "slides": 4},
+    {"n": 8, "slides": 4},
+    {"n": 9, "slides": 4},
+    {"n": 10, "slides": 4}
+  ],
+  "adv": [
+    {"n": 1, "slides": 1},
+    {"n": 2, "slides": 1},
+    {"n": 3, "slides": 6},
+    {"n": 4, "slides": 4},
+    {"n": 5, "slides": 6},
+    {"n": 6, "slides": 6},
+    {"n": 7, "slides": 4},
+    {"n": 8, "slides": 4},
+    {"n": 9, "slides": 4}
+  ],
+  "copy": [
+    {"n": 1},
+    {"n": 2, "audio": true},
+    {"n": 3, "audio": true},
+    {"n": 4},
+    {"n": 5},
+    {"n": 6}
+  ],
+  "anim": [
+    {"n": 1},
+    {"n": 2},
+    {"n": 3}
+  ],
+  "proj": [
+    {"n": 1, "slides": 8, "video": true}
+  ]
+}

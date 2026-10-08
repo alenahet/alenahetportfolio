@@ -644,60 +644,93 @@ proj: [
 ]
 };
 const TAGS = {logo:'логотип', adv:'реклама', copy:'копирайт', anim:'анимация', proj:'проект'};
-const bust = '';
-const IS_MOBILE = matchMedia('(max-width:620px)').matches;
-const BATCH_SIZE = IS_MOBILE ? 6 : 10;
-const SAFETY_MS = IS_MOBILE ? 120000 : 60000;
-const PROBE_MS = IS_MOBILE ? 25000 : 15000;
-// Проверенный метод проверки файлов (работает и локально, и на хостинге), таймаут 4 сек
-const probeImg = u => new Promise(r => { const t = setTimeout(() => r(false), PROBE_MS); const i = new Image(); i.onload = () => { clearTimeout(t); r(true); }; i.onerror = () => { clearTimeout(t); r(false); }; i.src = u + bust; });
-const probeVid = u => new Promise(r => { const t = setTimeout(() => r(false), PROBE_MS); const v = document.createElement('video'); v.preload = 'metadata'; v.onloadedmetadata = () => { clearTimeout(t); r(true); }; v.onerror = () => { clearTimeout(t); r(false); }; v.src = u + bust; });
-const probeAudio = u => new Promise(r => { const t = setTimeout(() => r(false), PROBE_MS); const a = new Audio(); a.onloadedmetadata = () => { clearTimeout(t); r(true); }; a.onerror = () => { clearTimeout(t); r(false); }; a.src = u + bust; });
-// Функция параллельной загрузки батчами по 6 штук
-async function processBatch(tasks, batchSize = 6) {
-const results = [];
-for (let i = 0; i < tasks.length; i += batchSize) {
-const batch = tasks.slice(i, i + batchSize);
-const batchResults = await Promise.all(batch.map(task => task()));
-results.push(...batchResults);
+
+// БЫСТРАЯ ЗАГРУЗКА ЧЕРЕЗ MANIFEST (никаких probe-запросов)
+async function loadAllWorks() {
+  try {
+    const response = await fetch('manifest.json');
+    if (!response.ok) throw new Error('Manifest not found');
+    const manifest = await response.json();
+    const allWorks = [];
+
+    for (const cat of ['logo', 'adv', 'copy', 'anim', 'proj']) {
+      const items = manifest[cat] || [];
+      items.forEach(item => {
+        const wb = `img/works/${cat}/${item.n}/`;
+        const meta = (WORKS[cat] || [])[item.n - 1] || {};
+        const w = { cat, n: item.n, wb, meta };
+
+        if (cat === 'anim') {
+          w.video = wb + 'video.mp4';
+        } else if (cat === 'copy') {
+          if (item.audio) w.hasAudio = true;
+        } else {
+          w.cover = wb + 'cover.png';
+          w.slides = [];
+          const slideCount = item.slides || 0;
+          for (let i = 1; i <= slideCount; i++) {
+            w.slides.push(wb + i + '.jpg');
+          }
+          if (item.video) w.video = wb + 'video.mp4';
+        }
+        allWorks.push(w);
+      });
+    }
+    return allWorks;
+  } catch (e) {
+    console.error('Ошибка загрузки manifest:', e);
+    return [];
+  }
 }
-return results;
+
+// Умная проверка расширений (без багов со splice)
+async function fixExtensions(works) {
+  const tasks = [];
+  works.forEach(w => {
+    if (w.slides && w.slides.length > 0) {
+      w.slides.forEach((src, i) => {
+        tasks.push(new Promise(resolve => {
+          const img = new Image();
+          img.onload = () => resolve({ w, i, src });
+          img.onerror = () => {
+            const pngSrc = src.replace('.jpg', '.png');
+            const img2 = new Image();
+            img2.onload = () => resolve({ w, i, src: pngSrc });
+            img2.onerror = () => resolve({ w, i, src: null });
+            img2.src = pngSrc;
+          };
+          img.src = src;
+        }));
+      });
+    }
+  });
+
+  const results = await Promise.all(tasks);
+  
+  // Собираем правильные слайды обратно, без splice
+  const validSlidesMap = new Map();
+  results.forEach(r => {
+    if (r.src) {
+      if (!validSlidesMap.has(r.w)) validSlidesMap.set(r.w, []);
+      validSlidesMap.get(r.w)[r.i] = r.src;
+    }
+  });
+
+  works.forEach(w => {
+    if (w.slides) {
+      const valid = validSlidesMap.get(w) || [];
+      w.slides = valid.filter(s => s !== undefined && s !== null);
+    }
+  });
+
+  return works;
 }
-function makeTasks(cat){
-const base = 'img/works/' + cat + '/';
-const limit = cat === 'anim' ? (WORKS[cat] ? WORKS[cat].length + 2 : 0) : ((WORKS[cat] ? WORKS[cat].length : 0) + 4);
-const tasks = [];
-for (let n = 1; n <= limit; n++){
-tasks.push(async () => {
-const wb = base + n + '/';
-const has = cat === 'anim' ? await probeVid(wb + 'video.mp4') : await probeImg(wb + 'cover.png');
-if (!has) return null;
-const w = {cat, n, wb, meta:(WORKS[cat] || [])[n-1] || {}};
-if (cat === 'anim'){
-w.video = wb + 'video.mp4';
-} else {
-w.cover = wb + 'cover.png';
-w.slides = [];
-// Перебор слайдов: до 12 штук, только .jpg и .png (ускорение по итогам разборов)
-for (let i = 1; i < 12; i++){
-let f = null;
-for (const ext of ['.jpg', '.png']){
-if (await probeImg(wb + i + ext)){ f = wb + i + ext; break; }
-}
-if (f) w.slides.push(f); else break;
-}
-if (cat === 'proj' && await probeVid(wb + 'video.mp4')) w.video = wb + 'video.mp4';
-if (w.meta.audio && await probeAudio(wb + 'audio.mp3')) w.hasAudio = true;
-}
-return w;
-});
-}
-return tasks;
-}
+
 const worksEl = document.querySelector('.works');
 const worksLoader = document.getElementById('worksLoader');
 const filtersEl = document.querySelector('.filters');
 let ALL = []; let curF = 'all';
+
 function addWork(w){
 w.i = ALL.length; ALL.push(w);
 worksEl.insertAdjacentHTML('beforeend', `
@@ -709,23 +742,16 @@ worksEl.insertAdjacentHTML('beforeend', `
 </article>`); const el = worksEl.lastElementChild;
 if (curF !== 'all' && el.dataset.cat !== curF) el.classList.add('hide');
 }
+
 (async () => {
 filtersEl.classList.add('loading');
-// Все разделы грузятся одной общей очередью (не по разделам),
-// работы появляются разом, когда всё готово; лиса крутится всё это время
-const cats = ['logo','adv','copy','anim','proj'];
-const allTasks = [];
-for (const cat of cats) makeTasks(cat).forEach(t => allTasks.push(t));
-const results = new Array(allTasks.length).fill(undefined);
-const wrapped = allTasks.map((t, idx) => async () => { results[idx] = await t(); });
-const loadPromise = processBatch(wrapped, BATCH_SIZE);
-// Предохранитель: если канал совсем плохой, показываем то, что успело провериться
-const safety = new Promise(r => setTimeout(r, SAFETY_MS));
-await Promise.race([loadPromise, safety]);
-results.forEach(w => { if (w) addWork(w); });
+let works = await loadAllWorks();
+works = await fixExtensions(works);
+works.forEach(addWork);
 worksLoader.style.display = 'none';
 filtersEl.classList.remove('loading');
 })();
+
 worksEl.addEventListener('mouseover', e => { const v = e.target.closest('.wimg video'); if (v) v.play().catch(() => {}); });
 worksEl.addEventListener('mouseout', e => { const v = e.target.closest('.wimg video'); if (v){ v.pause(); v.currentTime = 0; } });
 const CATNOTES = {
