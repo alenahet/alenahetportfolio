@@ -663,8 +663,9 @@ async function loadAllWorks() {
         if (cat === 'anim') {
           w.video = wb + 'video.mp4';
         } else if (cat === 'copy') {
-          if (item.audio) w.hasAudio = true;
-        } else {
+w.cover = wb + 'cover.png'; // <-- ДОБАВИЛИ ЭТУ СТРОКУ
+if (item.audio) w.hasAudio = true;
+} else {
           w.cover = wb + 'cover.png';
           w.slides = [];
           const slideCount = item.slides || 0;
