@@ -134,6 +134,21 @@ h2{font-weight:800;font-size:clamp(1.7rem,3.8vw,2.7rem);line-height:1.12;margin-
 .wmeta .yr{font-size:.78rem;color:var(--muted)}
 @media(max-width:960px){.works{grid-template-columns:1fr 1fr}}
 @media(max-width:620px){.works{grid-template-columns:1fr}}
+/* ───────── УСЛУГИ ───────── */
+.services{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:44px}
+.srv{background:var(--card);border-radius:24px;padding:32px 32px 28px;box-shadow:0 14px 40px rgba(40,33,63,.08);display:flex;flex-direction:column;gap:16px;transition:transform .45s cubic-bezier(.2,.7,.2,1),box-shadow .45s}
+.srv:hover{transform:translateY(-6px);box-shadow:0 26px 56px rgba(40,33,63,.14)}
+.srv-head{display:flex;align-items:baseline;gap:14px}
+.srv-head span{font-family:var(--disp);font-weight:800;font-size:.9rem;color:var(--soft)}
+.srv-head h3{font-weight:800;font-size:1.25rem}
+.srv-list{list-style:none;display:flex;flex-direction:column;gap:8px;color:var(--muted);font-size:.95rem}
+.srv-list li{padding-left:20px;position:relative}
+.srv-list li::before{content:"✦";position:absolute;left:0;top:1px;color:var(--violet);font-size:.75rem}
+.srv-note{font-size:.8rem;color:var(--muted);background:var(--bg);border-radius:12px;padding:10px 14px;line-height:1.5}
+.srv-price{margin-top:auto;font-family:var(--disp);font-weight:800;font-size:1.02rem;color:var(--violet);background:var(--bg);border-radius:999px;padding:10px 20px;width:fit-content}
+.srv-bonus{margin-top:26px;background:var(--card);border:1px dashed var(--soft);border-radius:20px;padding:18px 28px;color:var(--muted);font-size:.95rem}
+.srv-bonus b{color:var(--violet)}
+@media(max-width:960px){.services{grid-template-columns:1fr}}
 /* ───────── LIGHTBOX & GALLERY UI ───────── */
 .lightbox{position:fixed;inset:0;z-index:200;background:rgba(24,18,40,.92);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .35s}
 .lightbox.open{opacity:1;pointer-events:auto}
@@ -349,6 +364,12 @@ html, body { overflow-x: hidden !important; }
 .wmeta h3 { font-size: .85rem; line-height: 1.2; }
 .wmeta .yr { display: none; }
 .wimg::after { display: none; }
+.services { gap: 14px; margin-top: 30px; }
+.srv { padding: 22px 20px; gap: 12px; }
+.srv-head h3 { font-size: 1.08rem; }
+.srv-list { font-size: .88rem; gap: 6px; }
+.srv-price { font-size: .9rem; padding: 8px 16px; }
+.srv-bonus { padding: 16px 20px; font-size: .85rem; }
 /* ИСПРАВЛЕНО: стрелки в галерее на мобиле видны, без кругов */
 .lb-nav {
 background: transparent !important;
@@ -411,6 +432,7 @@ html{scroll-behavior:auto}
 <nav>
 <a href="#about">Обо мне</a>
 <a href="#portfolio">Портфолио</a>
+<a href="#services">Услуги</a>
 </nav>
 <a class="btn btn-fill" href="#contacts">Связаться <span class="ar">↗</span></a>
 </div>
@@ -460,9 +482,10 @@ html{scroll-behavior:auto}
 <figcaption>Алена · ХЭТ studio</figcaption>
 </figure>
 <div class="about-txt">
-<p>С отличием окончила обучение по специальности «Реклама», где основной упор был на разработке брендов, носителей и маркетинговых стратегий с элементами менеджмента.</p>
-<p>Разрабатываю рекламный контент от фирменного стиля вашей компании до её продвижения.</p>
-<p>Составляю брифы, анализирую аудиторию и нахожу решения работающие на результат.</p>
+<p>Превращаю идеи в готовую рекламу.</p>
+<p>Разрабатываю всё: от логотипа и фирменных решений до полноценного рекламного продукта.</p>
+<p>Не ограничиваюсь созданием самого материала. Могу помочь определить подходящий формат, носитель и способ подачи с учётом вашей аудитории и задачи.</p>
+<p>Идея не останется макетом, а найдёт своего зрителя.</p>
 <div class="facts">
 <span class="fact"><i><img class="cross" src="img/cross.png" alt="" onerror="this.outerHTML='✕'"></i> красный диплом · «Агент рекламы»</span>
 <span class="fact"><i><img class="cross" src="img/cross.png" alt="" onerror="this.outerHTML='✕'"></i> призёр · «Профессионалы»</span>
@@ -496,12 +519,68 @@ html{scroll-behavior:auto}
 <div class="works rv"></div>
 </div>
 </section>
+<section id="services" style="padding-top:0">
+<div class="wrap">
+<div class="rv">
+<p class="s-label">03 · услуги</p>
+<h2>Чем я могу помочь</h2>
+<p class="s-note">Беру задачи любого масштаба: от одного носителя до комплексного рекламного продукта. Цена — точка старта, итоговая стоимость зависит от задачи и объёма.</p>
+</div>
+<p class="srv-bonus rv">Заказываете логотип + фирменный стиль + носители вместе? <b>Сделаю скидку 5-10% на общий чек.</b> Обсудим индивидуально!</p>
+<div class="services rv">
+<article class="srv">
+<div class="srv-head"><span>01</span><h3>Брендинг и айдентика</h3></div>
+<ul class="srv-list">
+<li>Логотип: знак + название</li>
+<li>Анимация логотипа и адаптации под носители</li>
+<li>Фирменный стиль</li>
+<li>Логобук, гайдлайн и брендбук</li>
+<li>Маскоты и персонажи с набором эмоций</li>
+</ul>
+<div class="srv-price">от 2 000 ₽</div>
+</article>
+<article class="srv">
+<div class="srv-head"><span>02</span><h3>Рекламные носители</h3></div>
+<ul class="srv-list">
+<li>Полиграфия</li>
+<li>Индоор (indoor)</li>
+<li>Аутдоор (outdoor)</li>
+<li>Мерч и сувенирка</li>
+<li>Ивент / BTL</li>
+</ul>
+<div class="srv-price">от 3 000 ₽ за позицию</div>
+</article>
+<article class="srv">
+<div class="srv-head"><span>03</span><h3>Digital и веб-дизайн</h3></div>
+<ul class="srv-list">
+<li>Посты и сторис для соцсетей, включая анимированные</li>
+<li>Обложки и шаблоны для регулярных публикаций</li>
+<li>Сайты: дизайн и вёрстка HTML/CSS</li>
+<li>Презентации и email-рассылки</li>
+</ul>
+<p class="srv-note">Готовый сайт передаю кодом и файлами. Публикация в интернете — на стороне заказчика.</p>
+<div class="srv-price">от 1 500 ₽ · сайт от 5 000 ₽</div>
+</article>
+<article class="srv">
+<div class="srv-head"><span>04</span><h3>Копирайтинг</h3></div>
+<ul class="srv-list">
+<li>Слоганы и рекламные тезисы</li>
+<li>Посты для соцсетей и email-рассылки</li>
+<li>Сценарии для видео и Reels</li>
+<li>Описания товаров и услуг, тексты для сайтов</li>
+</ul>
+<div class="srv-price">от 100 ₽ за текст</div>
+</article>
+</div>
+<p class="srv-bonus rv">Бриф, анализ аудитории и конкурентов <b>входят в стоимость любого проекта</b> чтобы дизайн попал в цель, а не просто красиво выглядел.</p>
+</div>
+</section>
 <section id="contacts" style="padding-top:0">
 <div class="wrap">
 <div class="cta-card rv">
-<p class="s-label" style="color:rgba(255,255,255,.7)">03 · контакты</p>
-<h2>Связаться со мной:</h2>
-<p>Выберите удобный для вас способ.</p>
+<p class="s-label" style="color:rgba(255,255,255,.7)">04 · контакты</p>
+<h2>Обсудим ваш проект?</h2>
+<p>Выберите удобный способ связи:</p>
 <div class="cta-btns">
 <a class="btn btn-white" href="mailto:alenahet1@gmail.com">Написать на почту <span class="ar">✉</span></a>
 </div>
@@ -644,94 +723,84 @@ proj: [
 ]
 };
 const TAGS = {logo:'логотип', adv:'реклама', copy:'копирайт', anim:'анимация', proj:'проект'};
-
 // БЫСТРАЯ ЗАГРУЗКА ЧЕРЕЗ MANIFEST (никаких probe-запросов)
 async function loadAllWorks() {
-  try {
-    const response = await fetch('manifest.json');
-    if (!response.ok) throw new Error('Manifest not found');
-    const manifest = await response.json();
-    const allWorks = [];
-
-    for (const cat of ['logo', 'adv', 'copy', 'anim', 'proj']) {
-      const items = manifest[cat] || [];
-      items.forEach(item => {
-        const wb = `img/works/${cat}/${item.n}/`;
-        const meta = (WORKS[cat] || [])[item.n - 1] || {};
-        const w = { cat, n: item.n, wb, meta };
-
-        if (cat === 'anim') {
-          w.video = wb + 'video.mp4';
-        } else if (cat === 'copy') {
+try {
+const response = await fetch('manifest.json');
+if (!response.ok) throw new Error('Manifest not found');
+const manifest = await response.json();
+const allWorks = [];
+for (const cat of ['logo', 'adv', 'copy', 'anim', 'proj']) {
+const items = manifest[cat] || [];
+items.forEach(item => {
+const wb = `img/works/${cat}/${item.n}/`;
+const meta = (WORKS[cat] || [])[item.n - 1] || {};
+const w = { cat, n: item.n, wb, meta };
+if (cat === 'anim') {
+w.video = wb + 'video.mp4';
+} else if (cat === 'copy') {
 w.cover = wb + 'cover.png'; // <-- ДОБАВИЛИ ЭТУ СТРОКУ
 if (item.audio) w.hasAudio = true;
 } else {
-          w.cover = wb + 'cover.png';
-          w.slides = [];
-          const slideCount = item.slides || 0;
-          for (let i = 1; i <= slideCount; i++) {
-            w.slides.push(wb + i + '.jpg');
-          }
-          if (item.video) w.video = wb + 'video.mp4';
-        }
-        allWorks.push(w);
-      });
-    }
-    return allWorks;
-  } catch (e) {
-    console.error('Ошибка загрузки manifest:', e);
-    return [];
-  }
+w.cover = wb + 'cover.png';
+w.slides = [];
+const slideCount = item.slides || 0;
+for (let i = 1; i <= slideCount; i++) {
+w.slides.push(wb + i + '.jpg');
 }
-
+if (item.video) w.video = wb + 'video.mp4';
+}
+allWorks.push(w);
+});
+}
+return allWorks;
+} catch (e) {
+console.error('Ошибка загрузки manifest:', e);
+return [];
+}
+}
 // Умная проверка расширений (без багов со splice)
 async function fixExtensions(works) {
-  const tasks = [];
-  works.forEach(w => {
-    if (w.slides && w.slides.length > 0) {
-      w.slides.forEach((src, i) => {
-        tasks.push(new Promise(resolve => {
-          const img = new Image();
-          img.onload = () => resolve({ w, i, src });
-          img.onerror = () => {
-            const pngSrc = src.replace('.jpg', '.png');
-            const img2 = new Image();
-            img2.onload = () => resolve({ w, i, src: pngSrc });
-            img2.onerror = () => resolve({ w, i, src: null });
-            img2.src = pngSrc;
-          };
-          img.src = src;
-        }));
-      });
-    }
-  });
-
-  const results = await Promise.all(tasks);
-  
-  // Собираем правильные слайды обратно, без splice
-  const validSlidesMap = new Map();
-  results.forEach(r => {
-    if (r.src) {
-      if (!validSlidesMap.has(r.w)) validSlidesMap.set(r.w, []);
-      validSlidesMap.get(r.w)[r.i] = r.src;
-    }
-  });
-
-  works.forEach(w => {
-    if (w.slides) {
-      const valid = validSlidesMap.get(w) || [];
-      w.slides = valid.filter(s => s !== undefined && s !== null);
-    }
-  });
-
-  return works;
+const tasks = [];
+works.forEach(w => {
+if (w.slides && w.slides.length > 0) {
+w.slides.forEach((src, i) => {
+tasks.push(new Promise(resolve => {
+const img = new Image();
+img.onload = () => resolve({ w, i, src });
+img.onerror = () => {
+const pngSrc = src.replace('.jpg', '.png');
+const img2 = new Image();
+img2.onload = () => resolve({ w, i, src: pngSrc });
+img2.onerror = () => resolve({ w, i, src: null });
+img2.src = pngSrc;
+};
+img.src = src;
+}));
+});
 }
-
+});
+const results = await Promise.all(tasks);
+// Собираем правильные слайды обратно, без splice
+const validSlidesMap = new Map();
+results.forEach(r => {
+if (r.src) {
+if (!validSlidesMap.has(r.w)) validSlidesMap.set(r.w, []);
+validSlidesMap.get(r.w)[r.i] = r.src;
+}
+});
+works.forEach(w => {
+if (w.slides) {
+const valid = validSlidesMap.get(w) || [];
+w.slides = valid.filter(s => s !== undefined && s !== null);
+}
+});
+return works;
+}
 const worksEl = document.querySelector('.works');
 const worksLoader = document.getElementById('worksLoader');
 const filtersEl = document.querySelector('.filters');
 let ALL = []; let curF = 'all';
-
 function addWork(w){
 w.i = ALL.length; ALL.push(w);
 worksEl.insertAdjacentHTML('beforeend', `
@@ -743,7 +812,6 @@ worksEl.insertAdjacentHTML('beforeend', `
 </article>`); const el = worksEl.lastElementChild;
 if (curF !== 'all' && el.dataset.cat !== curF) el.classList.add('hide');
 }
-
 (async () => {
 filtersEl.classList.add('loading');
 let works = await loadAllWorks();
@@ -752,14 +820,13 @@ works.forEach(addWork);
 worksLoader.style.display = 'none';
 filtersEl.classList.remove('loading');
 })();
-
 worksEl.addEventListener('mouseover', e => { const v = e.target.closest('.wimg video'); if (v) v.play().catch(() => {}); });
 worksEl.addEventListener('mouseout', e => { const v = e.target.closest('.wimg video'); if (v){ v.pause(); v.currentTime = 0; } });
 const CATNOTES = {
 all:'Последние работы',
-logo:'В разделе представлены авторские концепции. Умею создавать уникальные визуальные решения с нуля, опираясь на задачи бренда, анализ ниши и позиционирование.',
-adv:'Все носители создаются с учетом конкретной задачи, позволяя аудитории мгновенно воспринимать информацию и надолго запоминать бренд. Здесь представлены примеры моего подхода к визуальной коммуникации в полиграфии и рекламе.',
-copy:'Пишу всё: от продающих описаний и постов до сценариев и стратегии коммуникации. Каждый материал основан на анализе ЦА и позиционировании продукта. Умею создавать контент, который помогает бизнесу говорить с аудиторией на одном языке и решать маркетинговые задачи.',
+logo:'Работы в этом разделе — авторские концепции, доступные для покупки с передачей исключительных прав. Также разработываю уникальные знаки и айдентику с нуля, опираясь на задачи вашего бренда.',
+adv:'Все носители создаются с учётом конкретной задачи, позволяя аудитории мгновенно воспринимать информацию и надолго запоминать бренд.',
+copy:'Каждый текст основан на анализе ЦА и позиционировании. Если вам нужны продающие описания, посты для соцсетей, сценарии или стратегия коммуникации, опишите вашу задачу. Предложу решения, которые помогут вашему бренду говорить с аудиторией на одном языке.',
 anim:'Логотипы я рисую и анимирую полностью вручную. Персонажей также отрисовываю сама с нуля, но для их плавного оживления использую AI-инструменты. Это позволяет сохранить уникальный авторский стиль и оптимизировать сроки создания динамики.',
 proj:'Здесь только реализованные работы, где дизайн решал реальные бизнес-задачи. Никаких учебных макетов, только результат, который уже работает.'
 };
